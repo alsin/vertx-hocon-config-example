@@ -1,4 +1,2 @@
 io.vertx.config.impl.spi.JsonProcessor
-io.vertx.config.impl.spi.RawProcessor
-io.vertx.config.impl.spi.PropertiesConfigProcessor
 io.vertx.config.hocon.HoconProcessor
