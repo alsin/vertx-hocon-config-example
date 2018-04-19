@@ -14,8 +14,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
 import java.lang.reflect.Field;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,25 +25,25 @@ import static org.powermock.api.mockito.PowerMockito.when;
 public class HoconConfigTest {
 
     private static final JsonObject EXPECTED_DEFAULT_CONFIG = new JsonObject()
-            .put("a", new JsonObject()
-                    .put("b", 1)
-                    .put("c", new JsonObject()
-                            .put("d", "d-Value")
-                            .put("e", "e-Value")
-                            .put("f", new JsonArray()
-                                    .add("f1")
-                                    .add("f2"))));
+            .put("httpServer", new JsonObject()
+                    .put("port", 8080)
+                    .put("answer", new JsonObject()
+                            .put("title", "Some title")
+                            .put("body", "Some body")
+                            .put("routes", new JsonArray()
+                                    .add("/")
+                                    .add("/all"))));
 
     private static final JsonObject EXPECTED_REWRITTEN_CONFIG = new JsonObject()
-            .put("a", new JsonObject()
-                    .put("b", "2")
-                    .put("c", new JsonObject()
-                            .put("d", "D")
-                            .put("e", "E")
-                            .put("f", new JsonArray()
-                                    .add("f1")
-                                    .add("f2")
-                                    .add("f3"))));
+            .put("httpServer", new JsonObject()
+                    .put("port", "8081")
+                    .put("answer", new JsonObject()
+                            .put("title", "Response title")
+                            .put("body", "Response body")
+                            .put("routes", new JsonArray()
+                                    .add("/")
+                                    .add("/all")
+                                    .add("/json"))));
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
@@ -91,12 +89,6 @@ public class HoconConfigTest {
         return (Map<String, String>) unmodifiableMapField.get(unmodifiableEnvPropMap);
     }
 
-    private String getHoconConfigPath() throws URISyntaxException {
-        return Paths.get(HoconConfigTest.class.getResource("test.conf").toURI())
-                .toFile()
-                .getAbsolutePath();
-    }
-
     private void testConfigImpl(TestContext context, Vertx vertx, JsonObject expectedJson) {
         ConfigLoadTestVerticle verticle = new ConfigLoadTestVerticle();
         context.assertNull(verticle.getConfiguration());
@@ -108,8 +100,6 @@ public class HoconConfigTest {
             context.assertEquals(expectedJson, configuration);
 
         }));
-
     }
-
 
 }

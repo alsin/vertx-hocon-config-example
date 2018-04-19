@@ -1,10 +1,10 @@
 package com.example.vertx.hocon.test;
 
 public enum HoconConfigEnvVarEnum {
-    ENV_VAR_B("2"),
-    ENV_VAR_D("D"),
-    ENV_VAR_E("E"),
-    ENV_VAR_F("f3");
+    HTTP_PORT("8081"),
+    RESPONSE_TITLE("Response title"),
+    RESPONSE_BODY("Response body"),
+    ROUTES("/json");
 
     private String testValue;
 
