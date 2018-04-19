@@ -192,6 +192,23 @@ have been loaded and initialized in a previous test) and initialized with those 
         
     }
 
+# Web server
+You can also build the project with 
 
+    mvn clean package
+    
+and then from the root of the project launch the application by executing:
 
+    java -jar -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory target/vertx-hocon-test-example-1.0-SNAPSHOT-fat.jar
+
+This will deploy a Verticle that will launch a web server on the port specified in the `test.conf` HOCON configuration file. 
+The server will also read the endpoints (routes) for which it will handle GET requests by simply returning a JSON with 
+the `title` and `body` properties also defined in the configuration file. E.g. after starting the server hit the following 
+address in your browser: 
+
+    http://localhost:8080/ 
+
+And you should get a JSON in response:
+
+    {"title":"Some title","body":"Some body"} 
 
