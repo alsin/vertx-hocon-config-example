@@ -70,7 +70,7 @@ public class HoconConfigTest {
     }
 
     @Test
-    @PrepareForTest({ System.class, ConfigImpl.class })
+    @PrepareForTest({ ConfigImpl.class })
     public void testHoconConfigWithInjectedEnvironmentVariables(TestContext context) throws NoSuchFieldException, IllegalAccessException {
         Map<String, String> envProps = getModifiableEnvPropMap();
         Arrays.stream(HoconConfigEnvVarEnum.values()).forEach(confEnvVarName -> envProps.put(confEnvVarName.name(),
